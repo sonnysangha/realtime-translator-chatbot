@@ -1,13 +1,15 @@
 import { Action } from "redux";
+// import { actionChannel } from "redux-saga/effects";
 
 export enum types {
-  SAMPLE_CALLED = 'SAMPLE_CALLED',
+  ADD_PHRASE_TO_FIRESTORE = 'ADD_PHRASE_TO_FIRESTORE',
 }
 
-export type sampleCalledAction = {
-  value: boolean
+export type AddPhraseAction = {
+  phrase: string;
 }
-export const sampleCalled = (value: boolean): Action & sampleCalledAction => ({
-  type: types.SAMPLE_CALLED,
-  value
+
+export const addPhraseToFirestore = (phrase: string): Action & AddPhraseAction => ({
+  type: types.ADD_PHRASE_TO_FIRESTORE,
+  phrase
 });

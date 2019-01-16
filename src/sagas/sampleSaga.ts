@@ -1,28 +1,16 @@
 import { takeEvery } from 'redux-saga/effects';
 import { types as sampleTypes } from '../actions/sampleActions';
 import { SagaIterator } from 'redux-saga';
+import axios from 'axios';
+import moment from 'moment';
 
-function* sampleGeneratorFunction(action: any): SagaIterator {
-    // API async call could happen here
-
-    // const { email } = action.payload;
-    // try {
-    //     yield api(
-    //         '/oauth/challenge',
-    //         'POST',
-    //         {
-    //             username: email,
-    //             challenge_type: 'admin-login',
-    //         },
-    //         true,
-    //         false,
-    //     );
-    //     yield put(sendDynamicLinkSuccess());
-    // } catch (e) {
-    //     yield put(sendDynamicLinkFailure());
-    // }
+function* addPhraseToFirestore(action: any): SagaIterator {
+    axios.post('https://us-central1-helix-f06de.cloudfunctions.net/addPhraseToFirestore', {
+        phrase: action.phrase,
+        datetime: moment()
+    })
 }
 
 export default function* sampleSaga() {
-    yield takeEvery(sampleTypes.SAMPLE_CALLED, sampleGeneratorFunction);
+    yield takeEvery(sampleTypes.ADD_PHRASE_TO_FIRESTORE, addPhraseToFirestore);
 }

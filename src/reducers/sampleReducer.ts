@@ -1,20 +1,16 @@
-import { types } from '../actions/sampleActions';
 import { AnyAction } from 'redux';
 
 export type sampleReducerState = {
-  reveal: boolean,
-  sampleValue: string,
+  appDescription: string,
 }
 
 const initialState: sampleReducerState = {
-  reveal: false,
-  sampleValue: 'alive thanks to Redux stuff!'
+  appDescription: 'Realtime demonstration of Firebase FireStore, Cloud functions & Google translate API'
 };
 
 const sampleReducer = (state = initialState, action: AnyAction) => {
   switch (action.type) {
-    case types.SAMPLE_CALLED:
-      return { ...state, reveal: action.value };
+    // Handle Reducer updates here...
     default:
       return state;
   }

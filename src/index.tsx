@@ -5,12 +5,25 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
+// Firebase imports
+import firebase from '@firebase/app';
+import '@firebase/firestore';
+//@ts-ignore
+import { FirestoreProvider } from 'react-firestore';
+
 import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
 import rootReducer from './reducers/rootReducer';
 import sampleSaga from './sagas/sampleSaga';
 import TestComponent from './Component';
+
+import Config from './Config';
+
+const config = {
+  apiKey: Config.FIREBASE_API_KEY,
+  projectId: Config.FIREBASE_PROJECT_ID,
+};
+firebase.initializeApp(config);
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -27,12 +40,13 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router>
-      <Switch>
-        <Route path="/test" component={TestComponent} />
-        <Route path="/" exact component={App} />
-      </Switch>
-    </Router>
+    <FirestoreProvider firebase={firebase} useTimestampsInSnapshots>
+      <Router>
+        <Switch>
+          <Route path="/" component={TestComponent} />
+        </Switch>
+      </Router>
+    </FirestoreProvider>
   </Provider>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
